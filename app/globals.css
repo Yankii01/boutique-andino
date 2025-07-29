@@ -1,0 +1,28 @@
+@import url(https://db.onlinewebfonts.com/c/1fed4454352f201d52b65ca5480afb2d?family=Playlist-Script);
+@import "tailwindcss";
+
+body {
+  background-color: #F5F5DC; /* beige */
+  color: #7F5539; /* peru-madera */
+}
+
+section {
+  color: black; /* Color negro para el texto dentro de las secciones */
+}
+
+@keyframes mover-logo {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-700 { animation-delay: 700ms; }
+.animate-delay-900 { animation-delay: 900ms; }
