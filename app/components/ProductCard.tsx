@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { useCart } from './CartContext'; // Importamos el hook del carrito
 
 // Definimos el tipo para las props del producto para mayor claridad y seguridad.
 type Product = {
@@ -27,11 +28,19 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [selectedColor, setSelectedColor] = useState<string | undefined>(product.availableColors?.[0]);
   const [selectedSize, setSelectedSize] = useState<string | undefined>(product.sizes?.[0]);
   const { t } = useTranslation('common');
+  const { addToCart } = useCart(); // Usamos el hook para obtener la función addToCart
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageSrc: product.imageSrc,
+    });
+  };
 
   return (
-    <a
-      href={product.href}
-      onClick={(e) => e.preventDefault()}
+    <div
       className="group relative block overflow-hidden rounded-lg shadow-xl transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 hover:scale-102 hover:rotate-x-1 hover:rotate-y-1"
     >
       {/* Imagen del producto */}
@@ -67,11 +76,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Selector de tallas */}
         {product.sizes && product.sizes.length > 0 && (
           <div className="mt-2">
-            <label htmlFor="size-select" className="sr-only">
+            <label htmlFor={`size-select-${product.id}`} className="sr-only">
               Size
             </label>
             <select
-              id="size-select"
+              id={`size-select-${product.id}`}
               className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-peru-rojo focus:border-peru-rojo sm:text-sm rounded-md"
               value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
@@ -88,16 +97,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Selector de colores */}
         {product.availableColors && product.availableColors.length > 0 && (
           <div className="mt-2">
-            <label htmlFor="color-select" className="block text-sm font-medium text-peru-madera">
+            <label htmlFor={`color-select-${product.id}`} className="block text-sm font-medium text-peru-madera">
               Color:
             </label>
             <div className="flex space-x-2 mt-1">
               {product.availableColors.map((color, index) => (
                 <span
                   key={index}
-                  className={`h-6 w-6 rounded-full border-2 ${
-                    selectedColor === color ? 'border-peru-rojo' : 'border-peru-arena'
-                  } cursor-pointer`}
+                  className={`h-6 w-6 rounded-full border-2 ${selectedColor === color ? 'border-peru-rojo' : 'border-peru-arena'} cursor-pointer`}
                   style={{ backgroundColor: color }}
                   title={color}
                   onClick={() => setSelectedColor(color)}
@@ -113,10 +120,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
         {/* Botón de agregar al carrito */}
-        <button className="mt-4 w-full bg-[rgb(192,87,70)] text-white py-2 px-4 rounded-md hover:bg-[rgb(127,85,57)] focus:outline-none focus:ring-2 focus:ring-[rgb(192,87,70)] focus:ring-offset-2">
+        <button 
+          onClick={handleAddToCart} 
+          className="mt-4 w-full bg-[rgb(192,87,70)] text-white py-2 px-4 rounded-md hover:bg-[rgb(127,85,57)] focus:outline-none focus:ring-2 focus:ring-[rgb(192,87,70)] focus:ring-offset-2"
+        >
           {t('add_to_cart')}
         </button>
       </div>
-    </a>
+    </div>
   );
 }

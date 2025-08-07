@@ -26,3 +26,39 @@ section {
 .animate-delay-500 { animation-delay: 500ms; }
 .animate-delay-700 { animation-delay: 700ms; }
 .animate-delay-900 { animation-delay: 900ms; }
+
+@keyframes blink-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink-text {
+  animation: blink-slow 3.5s infinite;
+}
+
+.cart-sidebar {
+  transition: transform 0.8s ease-in-out;
+  transform: translateX(100%); /* Por defecto, oculto a la derecha */
+}
+
+.cart-sidebar.cart-open {
+  transform: translateX(0); /* Cuando está abierto, visible */
+}
+
+@keyframes slogan-animation {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  20% { opacity: 1; }
+  30% { opacity: 1; }
+  50% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.slogan-animation {
+  animation: slogan-animation 14s infinite;
+}

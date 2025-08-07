@@ -34,6 +34,11 @@ const config: Config = {
         'fade-in': 'fadeIn 0.3s ease-out forwards',
         'dot-fade': 'dotFade 1.5s infinite',
         'gradient-move': 'gradient-move 10s ease infinite',
+        'appear-every-10s': 'appear-every-10s 10s infinite',
+        'slide-in-right': 'slide-in-right 0.3s ease-out forwards',
+        'slide-out-right': 'slide-out-right 0.3s ease-out forwards',
+        'pulse-hover': 'pulse-hover 1s infinite',
+        'blink-slow': 'blink-slow 1s infinite',
       },
       keyframes: {
         fadeInUp: {
@@ -53,6 +58,33 @@ const config: Config = {
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
         },
+        'appear-every-10s': {
+          '0%': { opacity: '0' },
+          '10%': { opacity: '1' },
+          '20%': { opacity: '1' },
+          '30%': { opacity: '0' },
+          '100%': { opacity: '0' },
+        },
+        'slide-in-right': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        'slide-out-right': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        jump: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+        'pulse-hover': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.02)' },
+        },
+        'blink-slow': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
       },
       animationDelay: {
         '100': '100ms',
@@ -68,6 +100,21 @@ const config: Config = {
         [`.animation-delay-${key}`]: { 'animation-delay': value },
       }));
       addUtilities(newUtilities);
+
+      addUtilities({
+        '.text-shadow': {
+          'text-shadow': '2px 2px 4px rgba(0, 0, 0, 0.5)',
+        },
+        '.text-shadow-md': {
+          'text-shadow': '3px 3px 6px rgba(0, 0, 0, 0.6)',
+        },
+        '.text-shadow-lg': {
+          'text-shadow': '4px 4px 8px rgba(0, 0, 0, 0.7)',
+        },
+        '.text-shadow-none': {
+          'text-shadow': 'none',
+        },
+      }, ['responsive', 'hover']);
     }
   ],
 };
